@@ -1,25 +1,24 @@
 import React from "react";
 
-const SideNavbar = () => {
+const SideNavbar = (props) => {
   return (
     <>
-    <button className="hidden sticky">
-        <i className="bi bi-list ml-5 text-3xl text-white"></i>
-        </button>
     <div
-      className=" sidebar fixed top-0 left-0 bottom-0 lg:left-0  w-[400px]
-    overflow-y-auto  bg-zinc-800"
+      className={`${props.display} sidebar fixed top-0 left-0 bottom-0 lg:left-0  w-[400px] overflow-y-auto  bg-zinc-800`}
     >
       <div className="text-white text-xl text-center">
         <div className="p-2.5 mt-1 flex items-center">
           <img
             className="h-10"
-            src="https://static-00.iconduck.com/assets.00/youtube-icon-512x511-qrlabbtf.png"
+            src="https://st.depositphotos.com/1575949/2559/v/450/depositphotos_25599809-stock-illustration-play-icon-on-red-glossy.jpg"
             alt=""
           />
           <h1 className="font-bold text-white text-[20px] ml-3">
             SynopsifyLink
           </h1>
+          <button onClick={()=>{props.toggleSideBar()}} className="ml-40">
+          <i class="bi bi-x-lg hover:text-red-900"></i>
+          </button>
         </div>
         <hr className="my-2 text-white" />
 
