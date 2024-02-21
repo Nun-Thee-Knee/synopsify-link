@@ -9,12 +9,14 @@ import Navbar from './components/Navbar';
 function App() {
   return (
     <>
+    <div className='left-0 right-0'>
     <Navbar/>
     <Home id="home"/>
     <About id="about"/>
     <Contact id="contact"/>
     {/* <Login/> */}
     {/* <Workspace/> */}
+    </div>
     </>
   );
 }
