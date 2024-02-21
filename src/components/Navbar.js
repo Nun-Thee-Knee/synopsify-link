@@ -61,10 +61,10 @@ export default function Navbar() {
 
                 {/* Profile dropdown */}
                 <button className='hover:text-red-800 text-white text-md'>
-                  Sign Up
+                  <a href="/login">Sign Up</a>
                 </button>
                 <button className='hover:text-red-800 text-white ml-10 text-md'>
-                  Login
+                  <a href="/login">Login</a>
                 </button>
               </div>
             </div>

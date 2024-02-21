@@ -24,7 +24,9 @@ const Login = () => {
             <input className='bg-black rounded-xl text-white w-full border mb-10 border-gray-300 rounded' type="password" placeholder="Enter your password" />
             <input className={`${form === "Login"?"hidden":""} bg-black rounded-xl text-white w-full border mb-10 border-gray-300 rounded`} type="password" placeholder="Confirm password" />
             <center>
-            <button className='hover:bg-red-800 rounded-2xl border-red-800 border-[1px] w-full text-white p-3'>{form}</button>
+            <button className='hover:bg-red-800 rounded-2xl border-red-800 border-[1px] w-full text-white p-3'>
+              <a href="/">{form}</a>
+            </button>
             </center>
           </form>
         </div>

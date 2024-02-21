@@ -16,7 +16,7 @@ export const Home = () => {
             Actionable Text Summaries: Your Link, Your Knowledge Unleashed.
           </p>
           <button className="hover:bg-red-800 text-xl bg-red-950 mt-10 h-10 w-full rounded-xl">
-            <strong>Go to Workspace</strong>
+            <strong><a href="/work">Go to Workspace</a></strong>
           </button>
         </div>
         <div className="flex justify-center items-center text-white h-auto w-[500px]">
