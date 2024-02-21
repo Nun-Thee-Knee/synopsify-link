@@ -34,8 +34,8 @@ export default function Navbar() {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=red&shade=800"
+                    className="h-10 w-auto cursor-pointer"
+                    src="https://st.depositphotos.com/1575949/2559/v/450/depositphotos_25599809-stock-illustration-play-icon-on-red-glossy.jpg"
                     alt="Your Company"
                   />
                 </div>
