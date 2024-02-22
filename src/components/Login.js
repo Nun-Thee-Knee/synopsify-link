@@ -14,9 +14,9 @@ const Login = () => {
   return (
     <div className="flex justify-center items-center h-[100vh] bg-gradient-to-b from-black to-red-950 bg-blend-multiply p-8">
       <div className='flex flex-col justify-start items-center h-[600px] w-[500px] bg-black bg-opacity-30 border-red-800 border-[1px] rounded-xl p-14'>
-        <div>
-          <button onClick={changeForm} className={`${form === "Login"?"bg-red-900":""} hover:text-red-500 rounded-l-2xl border-red-800 border-[1px] w-32 text-white p-5`}>Login</button>
-          <button onClick={changeForm} className={`${form === "Login"?"":"bg-red-900"} hover:text-red-500 rounded-r-2xl border-red-800 border-[1px] w-32 text-white p-5`}>Sign Up</button>
+        <div className='flex flex-wrap justify-center items-center space-y-2 space-x-2'>
+          <button onClick={changeForm} className={`${form === "Login"?"bg-red-900":""} hover:text-red-500 rounded-2xl border-red-800 border-[1px] w-28 text-white p-5`}>Sign In</button>
+          <button onClick={changeForm} className={`${form === "Login"?"":"bg-red-900"} hover:text-red-500 rounded-2xl border-red-800 border-[1px] w-28 text-white p-5`}>Sign Up</button>
         </div>
         <div id='form' className='mt-10 w-full'>
           <form action="">

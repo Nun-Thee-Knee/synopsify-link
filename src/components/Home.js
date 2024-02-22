@@ -12,7 +12,7 @@ export const Home = () => {
             </div>
           </h1>
           <p className="text-md mt-10 w-auto">
-            Changed Transforming Complex Video Narratives into Clear and
+            Transforming Complex Video Narratives into Clear and
             Actionable Text Summaries: Your Link, Your Knowledge Unleashed.
           </p>
           <button className="hover:bg-red-800 text-xl bg-red-950 mt-10 h-10 w-full rounded-xl">
