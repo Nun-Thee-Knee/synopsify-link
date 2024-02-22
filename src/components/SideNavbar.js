@@ -1,6 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
+import WorkContext from "../context/WorkContext";
 
 const SideNavbar = (props) => {
+  const context = useContext(WorkContext);
+  const { work, showPage, clearPage} = context;
+  console.log(work);
   return (
     <>
     <div
@@ -41,79 +45,26 @@ const SideNavbar = (props) => {
           className=" text-left text-sm font-thin mt-2 w-4/5 mx-auto"
           id="submenu"
         >
-          <div
+          
+          {work.map((elem)=>{
+            return <><div
+            onClick={()=>{showPage(elem); props.toggleSideBar()}}
             className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300
             cursor-pointer hover:text-red-800 text-white"
           >
             <span className="text-[15px]">
-              <strong className="font-extrabold">20-02-2024</strong>: Lorem
-              ipsum dolor sit, amet consectetur adipisicing elit. Mollitia,
-              perferendis consequuntur in molestiae veniam totam ipsa quod
-              eveniet, velit expedita officia deserunt atque sequi vero nobis,
-              enim id praesentium cumque.
+              <strong className="font-extrabold">{elem['date']}: </strong>
+              {elem['title']}
             </span>
           </div>
           <hr className="my-2 text-white" />
-          <div
-            className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300
-            cursor-pointer hover:text-red-800 text-white"
-          >
-            <span className="text-[15px]">
-              <strong className="font-extrabold">20-02-2024</strong>: Lorem
-              ipsum dolor sit, amet consectetur adipisicing elit. Mollitia,
-              perferendis consequuntur in molestiae veniam totam ipsa quod
-              eveniet, velit expedita officia deserunt atque sequi vero nobis,
-              enim id praesentium cumque.
-            </span>
-          </div>
-          <hr className="my-2 text-white" />
-
-          <div
-            className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300
-            cursor-pointer hover:text-red-800 text-white"
-          >
-            <span className="text-[15px]">
-              <strong className="font-extrabold">20-02-2024</strong>: Lorem
-              ipsum dolor sit, amet consectetur adipisicing elit. Mollitia,
-              perferendis consequuntur in molestiae veniam totam ipsa quod
-              eveniet, velit expedita officia deserunt atque sequi vero nobis,
-              enim id praesentium cumque.
-            </span>
-          </div>
-          <hr className="my-2 text-white" />
-
-          <div
-            className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300
-            cursor-pointer hover:text-red-800 text-white"
-          >
-            <span className="text-[15px]">
-              <strong className="font-extrabold">20-02-2024</strong>: Lorem
-              ipsum dolor sit, amet consectetur adipisicing elit. Mollitia,
-              perferendis consequuntur in molestiae veniam totam ipsa quod
-              eveniet, velit expedita officia deserunt atque sequi vero nobis,
-              enim id praesentium cumque.
-            </span>
-          </div>
-          <hr className="my-2 text-white" />
-
-          <div
-            className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300
-            cursor-pointer hover:text-red-800 text-white"
-          >
-            <span className="text-[15px]">
-              <strong className="font-extrabold">20-02-2024</strong>: Lorem
-              ipsum dolor sit, amet consectetur adipisicing elit. Mollitia,
-              perferendis consequuntur in molestiae veniam totam ipsa quod
-              eveniet, velit expedita officia deserunt atque sequi vero nobis,
-              enim id praesentium cumque.
-            </span>
-          </div>
-          <hr className="my-2 text-white" />
-
+          </>
+          })}
 
         </div>
-        <div className="bg-zinc-800 sticky bottom-0 mb-0 h-20">
+        <div className="bg-zinc-800 sticky bottom-0 mb-0 h-20 flex flex-wrap space-x-2 justify-center items-center">
           <button className="h-9 w-28 rounded-xl bg-red-950 hover:bg-red-800 duration-1000 mt-5">Logout</button>
+          <button onClick={()=>{clearPage()}} className="h-9 w-28 rounded-xl bg-red-950 hover:bg-red-800 duration-1000 mt-5">New</button>
         </div>
       </div>
     </div>

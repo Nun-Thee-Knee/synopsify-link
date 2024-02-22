@@ -4,10 +4,13 @@ import Login from './components/Login';
 
 import Work from './components/Work';
 import Main from './components/Main';
+import WorkState from './context/WorkState';
 
 function App() {
   return (
     <>
+    <React.StrictMode>
+    <WorkState>
       <Router>
       <Routes>
         <Route path="/login" element={<Login form={"Login"}/>} />
@@ -16,6 +19,8 @@ function App() {
         <Route path="/" element={<Main />} />
       </Routes>
     </Router>
+    </WorkState>
+    </React.StrictMode>
     </>
   );
 }
