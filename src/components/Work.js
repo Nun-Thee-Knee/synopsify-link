@@ -61,12 +61,8 @@ const Work = () => {
         <i className="bi bi-card-checklist mr-2"></i>
           Summarize
         </button>
-        <div className="h-auto w-full border-red-950 border-[1px] p-5 mt-10">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe ab corrupti fuga nisi modi dicta incidunt, quisquam eum rerum esse omnis minus enim laudantium, exercitationem aut blanditiis commodi earum non.
-        Beatae, ipsum aliquam tempora deleniti tenetur sint iusto repudiandae expedita in qui cupiditate, sunt impedit accusamus voluptatum saepe suscipit ullam veritatis neque maxime necessitatibus a ducimus fugit aspernatur? Repellat, aut!
-        Porro recusandae iure exercitationem dolores, non consequatur. Cupiditate ullam aspernatur fugiat suscipit amet quasi neque repellat autem aliquid placeat officiis, ducimus nulla dolor, natus praesentium nam nostrum veniam repudiandae libero?
-        Ipsa excepturi minima quae, odio, voluptate, laboriosam porro ullam expedita deleniti sed aliquam. Sint voluptas, pariatur magni totam labore velit voluptatem, officiis ullam dolor eum assumenda, eius sequi quae itaque?
-        Sapiente voluptate atque quam eaque, rem perspiciatis! Nam in architecto ad dicta omnis labore delectus dolorem, nisi, magni odio accusamus repellendus voluptates, vel facere. Exercitationem quis quo animi modi perferendis.
+        <div className="text-white h-auto w-full border-red-950 border-[1px] p-5 mt-10">
+        Summary:
         </div>
         </div>
       </div>

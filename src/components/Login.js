@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-const Login = () => {
-  const [form, setForm] = useState("Login")
+const Login = (props) => {
+  const [form, setForm] = useState(props.form)
   function changeForm()
   {
     console.log(form)

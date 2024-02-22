@@ -17,7 +17,7 @@ const SideNavbar = (props) => {
             SynopsifyLink
           </h1>
           <button onClick={()=>{props.toggleSideBar()}} className="ml-40">
-          <i class="bi bi-x-lg hover:text-red-900"></i>
+          <i className="bi bi-x-lg hover:text-red-900"></i>
           </button>
         </div>
         <hr className="my-2 text-white" />

@@ -1,5 +1,5 @@
 import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
+import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
@@ -61,7 +61,7 @@ export default function Navbar() {
 
                 {/* Profile dropdown */}
                 <button className='hover:text-red-800 text-white text-md'>
-                  <a href="/login">Sign Up</a>
+                  <a href="/signup">Sign Up</a>
                 </button>
                 <button className='hover:text-red-800 text-white ml-10 text-md'>
                   <a href="/login">Login</a>
