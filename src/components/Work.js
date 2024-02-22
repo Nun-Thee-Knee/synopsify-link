@@ -20,7 +20,7 @@ const Work = () => {
         </button>
       </div>
       <div className="mt-10 flex flex-col justify-center items-center h-auto w-auto mx-auto">
-        <div className="flex space-x-24">
+        <div className="flex flex-wrap justify-center items-center space-x-4 space-y-2">
           <button className="bg-green-800 hover:bg-green-950 rounded-xl p-2">
             <center><i className="bi bi-floppy mr-2"></i>
             Save Work</center>
