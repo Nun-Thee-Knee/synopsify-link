@@ -3,6 +3,7 @@ import SideNavbar from "./SideNavbar";
 import WorkState from "../context/WorkState";
 import WorkContext from "../context/WorkContext";
 
+
 const Work = () => {
     const context = useContext(WorkContext)
     const { video, summary, getSummary, changeSummary, setVideo, saveWork} = context;

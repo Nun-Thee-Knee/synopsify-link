@@ -1,6 +1,10 @@
 import { Fragment } from 'react'
 import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { auth } from '../config/firebase';
+import { signOut } from 'firebase/auth';
+import { useNavigate } from "react-router-dom";
+
 
 const navigation = [
   { name: 'Home', href: '/', current: false },
@@ -13,6 +17,16 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const navigate = useNavigate();
+  const Logout = async(e) => {
+    try{
+      await signOut(auth);
+      navigate("/");
+    }catch(err){
+      console.log(err);
+    }
+  }
+
   return (
     <Disclosure as="nav" className="bg-black">
       {({ open }) => (
@@ -60,12 +74,20 @@ export default function Navbar() {
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
                 {/* Profile dropdown */}
+                {auth?.currentUser?.email === undefined? 
+                <>
                 <button className='hover:text-red-800 text-white text-md'>
-                  <a href="/signup">Sign Up</a>
-                </button>
-                <button className='hover:text-red-800 text-white ml-10 text-md'>
-                  <a href="/login">Login</a>
-                </button>
+                <a href="/signup">Sign Up</a>
+              </button>
+              <button className='hover:text-red-800 text-white ml-10 text-md'>
+                <a href="/login">Login</a>
+              </button>
+              </>:<>
+              <button onClick={Logout} className='hover:text-red-800 text-white ml-10 text-md'>
+                Logout
+              </button>
+              </>  
+              }
               </div>
             </div>
           </div>

@@ -1,7 +1,19 @@
 import React, {useContext} from "react";
 import WorkContext from "../context/WorkContext";
+import { auth } from "../config/firebase";
+import {useNavigate} from "react-router-dom";
+import { signOut } from "firebase/auth";
 
 const SideNavbar = (props) => {
+  const navigate = useNavigate();
+  const Logout = async(e) => {
+    try{
+      await signOut(auth);
+      navigate("/");
+    }catch(err){
+      console.log(err);
+    }
+  }
   const context = useContext(WorkContext);
   const { work, showPage, clearPage} = context;
   console.log(work);
@@ -63,7 +75,7 @@ const SideNavbar = (props) => {
 
         </div>
         <div className="bg-zinc-800 sticky bottom-0 mb-0 h-20 flex flex-wrap space-x-2 justify-center items-center">
-          <button className="h-9 w-28 rounded-xl bg-red-950 hover:bg-red-800 duration-1000 mt-5">Logout</button>
+          <button onClick={Logout} className="h-9 w-28 rounded-xl bg-red-950 hover:bg-red-800 duration-1000 mt-5">Logout</button>
           <button onClick={()=>{clearPage()}} className="h-9 w-28 rounded-xl bg-red-950 hover:bg-red-800 duration-1000 mt-5">New</button>
         </div>
       </div>

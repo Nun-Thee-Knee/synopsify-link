@@ -1,4 +1,5 @@
 import React from "react";
+import { auth } from "../config/firebase"; 
 
 export const Home = () => {
   return (
@@ -16,7 +17,9 @@ export const Home = () => {
             Actionable Text Summaries: Your Link, Your Knowledge Unleashed.
           </p>
           <button className="hover:bg-red-800 text-xl bg-red-950 mt-10 h-10 w-full rounded-xl">
-            <strong><a href="/work">Go to Workspace</a></strong>
+            <strong><a href={auth?.currentUser?.email === undefined?
+            "/signup": "/work"}>{auth?.currentUser?.email === undefined?
+            "Try us for free": "Go to Workspace"}</a></strong>
           </button>
         </div>
         <div className="flex justify-center items-center text-white h-auto w-[500px]">
