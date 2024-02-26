@@ -16,7 +16,6 @@ const SideNavbar = (props) => {
   }
   const context = useContext(WorkContext);
   const { work, showPage, clearPage} = context;
-  console.log(work);
   return (
     <>
     <div

@@ -1,53 +1,41 @@
 import WorkContext from "./WorkContext";
 import React, { useState } from "react";
+import {collection, getDocs, addDoc} from "firebase/firestore";
+import { db } from "../config/firebase";
+import { auth } from "../config/firebase";
 
 const WorkState = (props) => {
+    const workCollectionRef = collection(db, "work");
+    const [work, setWork] = useState([]);
     const [summary, setSummary] = useState("");
     const [link, setLink] = useState("");
-    const [video, showVideo] = useState(false)
-    const [page, setPage] = useState({
-        link: "",
-        content: ""})
+    const [title, setTitle] = useState("");
+
+    const saveAsPDF = () => {
+    // Create a new jsPDF instance
+    console.log("This is to save the PDF")
+    }
+
+    const getWork = async() =>
+    {
+        const data = await getDocs(workCollectionRef);
+        const arr = data.docs.map((doc) => (
+            doc.data()['UID'] === auth?.currentUser?.uid ? { ...doc.data(), id: doc.id } : null
+        ));
+        setWork(arr.filter(item => item !== null));
+    }
 
     const showPage = (item) => {
-        showVideo(true);
         setSummary(item['content'])
     }
 
-    const clearPage = () => {
+    const clearPage = async() => {
         setLink("");
-        showVideo(false);
-        setSummary("");
+        setSummary(""); 
     }
-     
-    let savedWork = [
-        {
-            date: "22-02-2024",
-            title: "Gemini Advanced is far more capable at reasoning, following instructions, coding, and creative inspiration. We can't wait to see what you create.",
-            content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate eius est nihil",
-            link: "https://youtu.be/hhWXPzTRIP8?feature=shared"
-        },
-        {
-            date: "21-02-2024",
-            title: "Marie Delphine Macarty or MacCarthy (March 19, 1787 – December 7, 1849), more commonly known as Madame Blanque or, after her third marriage, as Madame LaLaurie, was a New Orleans socialite and serial killer who was believed to have tortured and murdered slaves in her household.",
-            content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate eius est nihil",
-            link: "https://youtu.be/hhWXPzTRIP8?feature=shared"
-        },
-        {
-            date: "20-02-2024",
-            title: "Ricardo Leyva Muñoz Ramirez (/rəˈmɪərɛz/; February 29, 1960 – June 7, 2013), dubbed the Night Stalker, the Walk-In Killer and the Valley Intruder, was an American serial killer and sex offender whose crime spree took place in California from June 1984 until his capture in August 1985. He was convicted and sentenced to death in 1989, and died while awaiting execution in 2013.",
-            content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate eius est nihil",
-            link: "https://youtu.be/hhWXPzTRIP8?feature=shared"
-        },
-        {
-            date: "19-02-2024",
-            title: "Anna Elisabeth Michel (21 September 1952 – 1 July 1976) was a German woman who underwent 67 Catholic exorcism rites during the year before her death. She died of malnutrition, for which her parents and priest were convicted of negligent homicide. She was diagnosed with epileptic psychosis (temporal lobe epilepsy) and had a history of psychiatric treatment that proved ineffective.[1]",
-            content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate eius est nihil",
-            link: "https://youtu.be/hhWXPzTRIP8?feature=shared"
-        }
-    ]
-    const [work, setWork] = useState(savedWork);
-    const saveWork = () => {
+    const saveWork = async() => {
+        const today = new Date();
+        const formattedDate = `${today.getDate().toString().padStart(2, '0')}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getFullYear()}`;
         let newentry = {
             date: "23-02-2024",
             title: "This is a new title",
@@ -56,20 +44,19 @@ const WorkState = (props) => {
         }
         let newWork = [...work, newentry];
         setWork(newWork);
+        await addDoc(workCollectionRef,
+            {...newentry, UID:auth?.currentUser?.uid})
     }
     const getSummary = (ytLink) => {
         setLink(ytLink);
     }
     const changeSummary = () => {
-        setSummary("Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, laudantium! Architecto dignissimos magnam neque voluptas rerum corporis, odio explicabo quisquam nihil! Ullam, asperiores");
-    }
-    const setVideo = () => {
-        if(link !== "")
-        showVideo(true)
+        setTitle("Days in Sodom");
+        setSummary("Salò, or the 120 Days of Sodom (Italian: Salò o le 120 giornate di Sodoma), billed on-screen as Pasolini's 120 Days of Sodom on English-language prints[3] and commonly referred to as simply Salò (Italian: [saˈlɔ]), is a 1975 art horror film[a] directed and co-written by Pier Paolo Pasolini. The film is a loose adaptation of the 1785 novel (first published in 1904) The 120 Days of Sodom by Marquis de Sade, updating the story's setting to the World War II era. It was Pasolini's final film, released three weeks after his murder.");
     }
   return (
     <>
-    <WorkContext.Provider value={{showPage, work, video, summary, getSummary, changeSummary, setVideo, saveWork, clearPage}}>
+    <WorkContext.Provider value={{saveAsPDF, title, link, showPage, work, summary, getSummary, changeSummary, saveWork, clearPage, getWork}}>
         {props.children}
     </WorkContext.Provider>
     </>
