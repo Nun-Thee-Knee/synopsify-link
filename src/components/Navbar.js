@@ -1,31 +1,30 @@
-import { Fragment } from 'react'
-import { Disclosure } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { auth } from '../config/firebase';
-import { signOut } from 'firebase/auth';
+import { Fragment } from "react";
+import { Disclosure } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { auth } from "../config/firebase";
+import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
-
 const navigation = [
-  { name: 'Home', href: '/', current: false },
-  { name: 'About', href: '/', current: false },
-  { name: 'Contact', href: '/', current: false },
-]
+  { name: "Home", href: "/", current: false },
+  { name: "About", href: "/", current: false },
+  { name: "Contact", href: "/", current: false },
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const Logout = async(e) => {
-    try{
+  const Logout = async (e) => {
+    try {
       await signOut(auth);
       navigate("/");
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   return (
     <Disclosure as="nav" className="bg-black">
@@ -60,10 +59,12 @@ export default function Navbar() {
                         key={item.name}
                         href="/"
                         className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-red-700 ',
-                          'rounded-md px-3 py-2 text-sm font-medium'
+                          item.current
+                            ? "bg-gray-900 text-white"
+                            : "text-gray-300 hover:text-red-700 ",
+                          "rounded-md px-3 py-2 text-sm font-medium"
                         )}
-                        aria-current={item.current ? 'page' : undefined}
+                        aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
                       </a>
@@ -72,22 +73,26 @@ export default function Navbar() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
                 {/* Profile dropdown */}
-                {auth?.currentUser?.email === undefined? 
-                <>
-                <button className='hover:text-red-800 text-white text-md'>
-                <a href="/signup">Sign Up</a>
-              </button>
-              <button className='hover:text-red-800 text-white ml-10 text-md'>
-                <a href="/login">Login</a>
-              </button>
-              </>:<>
-              <button onClick={Logout} className='hover:text-red-800 text-white ml-10 text-md'>
-                Logout
-              </button>
-              </>  
-              }
+                {auth?.currentUser?.email === undefined ? (
+                  <>
+                    <button className="hover:text-red-800 text-white text-md">
+                      <a href="/signup">Sign Up</a>
+                    </button>
+                    <button className="hover:text-red-800 text-white ml-10 text-md">
+                      <a href="/login">Login</a>
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={Logout}
+                      className="hover:text-red-800 text-white ml-10 text-md"
+                    >
+                      Logout
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -100,10 +105,12 @@ export default function Navbar() {
                   as="a"
                   href="/"
                   className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-red-700 ',
-                    'block rounded-md px-3 py-2 text-base font-medium'
+                    item.current
+                      ? "bg-gray-900 text-white"
+                      : "text-gray-300 hover:text-red-700 ",
+                    "block rounded-md px-3 py-2 text-base font-medium"
                   )}
-                  aria-current={item.current ? 'page' : undefined}
+                  aria-current={item.current ? "page" : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>
@@ -113,5 +120,5 @@ export default function Navbar() {
         </>
       )}
     </Disclosure>
-  )
+  );
 }
