@@ -32,6 +32,7 @@ const Work = () => {
   };
   return (
     <>
+    {document.body.classList.add("bg-black")};
       <SideNavbar display={display} toggleSideBar={toggleSideBar} />
       <div className="bg-black text-white h-auto p-10 flex flex-col items-start">
         <div className="flex flex-row items-start mr-10">
