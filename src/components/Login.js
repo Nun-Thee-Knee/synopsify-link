@@ -44,7 +44,6 @@ const Login = (props) => {
         try {
           const { email, password } = credentials;
           await createUserWithEmailAndPassword(auth, email[0], password[0]);
-          alert(auth?.currentUser?.email, " logged in.");
           navigate("/");
         } catch (err) {
           errorMessage(err.message);
@@ -53,7 +52,6 @@ const Login = (props) => {
         try {
           const { email, password } = credentials;
           await signInWithEmailAndPassword(auth, email[0], password[0]);
-          alert(auth?.currentUser?.email, " logged in.");
           navigate("/");
         } catch (err) {
           errorMessage(err.message);

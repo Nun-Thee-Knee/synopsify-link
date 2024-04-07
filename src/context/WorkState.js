@@ -18,6 +18,8 @@ const WorkState = (props) => {
   const [summary, setSummary] = useState("");
   const [link, setLink] = useState("");
   const [title, setTitle] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const deleteWork = async (key) => {
     const workDoc = doc(db, "work", key);
@@ -32,46 +34,72 @@ const WorkState = (props) => {
   };
 
   const saveAsPDF = () => {
-    const doc = new jsPDF();
+     // Create a new jsPDF instance
+     const doc = new jsPDF();
 
-    doc.setFontSize(16);
-    doc.setFont("helvetica", "bold");
-
-    const titleWidth =
-      (doc.getStringUnitWidth(title) * doc.internal.getFontSize()) /
-      doc.internal.scaleFactor;
-    const titleX = (doc.internal.pageSize.width - titleWidth) / 2;
-
-    doc.text(title, titleX, 10);
-
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(12);
-
-    const summaryX = 10;
-    let summaryY = 20;
-
-    const lines = doc.splitTextToSize(
-      summary,
-      doc.internal.pageSize.width - 20
-    ); // Adjust as needed
-
-    const addText = (textLines, yPos) => {
-      for (let i = 0; i < textLines.length; i++) {
-        doc.text(textLines[i], summaryX, yPos);
-        yPos += 12;
-
-        if (yPos > doc.internal.pageSize.height - 10) {
-          doc.addPage();
-          yPos = 10;
-        }
-      }
-      return yPos;
-    };
-
-    // eslint-disable-next-line
-    summaryY = addText(lines, summaryY);
-    // Save the PDF
-    doc.save(`${title}.pdf`);
+     // Set font styles for title
+     doc.setFontSize(18); // Adjust font size as needed
+     doc.setFont('helvetica', 'bold'); // Making title bold
+ 
+     // Calculate the starting position for the title
+     let titleX = 10;
+     let titleY = 20;
+ 
+     // Split the title into words
+     const titleWords = title.split(' ');
+ 
+     // Add title to the PDF, handling multiple lines and pages
+     titleWords.forEach(word => {
+         const wordWidth = doc.getStringUnitWidth(word) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+ 
+         // Check if the word fits on the current line
+         if (titleX + wordWidth > doc.internal.pageSize.width - 20) {
+             // Move to the next line
+             titleX = 10;
+             titleY += 18; // Adjust line height as needed
+ 
+             // Check if there's enough space on the current page
+             if (titleY > doc.internal.pageSize.height - 10) {
+                 // Move to a new page
+                 doc.addPage();
+                 // Reset font styles for title on the new page
+                 doc.setFont('helvetica', 'bold');
+                 doc.setFontSize(18);
+                 titleY = 20;
+             }
+         }
+ 
+         // Add the word to the PDF
+         doc.text(word, titleX, titleY);
+         titleX += wordWidth + 5; // Add a space between words
+     });
+ 
+     // Reset font styles for summary
+     doc.setFont('helvetica', 'normal');
+     doc.setFontSize(12);
+ 
+     // Calculate the starting position for the summary
+     let summaryX = 10;
+     let summaryY = titleY + 18; // Adjust Y position based on title height
+ 
+     // Wrap and add the summary text, handling multiple pages
+     const lines = doc.splitTextToSize(summary, doc.internal.pageSize.width - 20); // Adjust as needed
+     for (let i = 0; i < lines.length; i++) {
+         doc.text(lines[i], summaryX, summaryY);
+         summaryY += 12; // Adjust line height as needed
+ 
+         if (summaryY > doc.internal.pageSize.height - 10) {
+             // Move to a new page if not enough space for the summary
+             doc.addPage();
+             // Reset font styles for summary on the new page
+             doc.setFont('helvetica', 'normal');
+             doc.setFontSize(12);
+             summaryY = 10;
+         }
+     }
+ 
+     // Save the PDF
+     doc.save(`${title}.pdf`);
   };
 
   const getWork = async () => {
@@ -118,11 +146,40 @@ const WorkState = (props) => {
   const getSummary = (ytLink) => {
     setLink(ytLink);
   };
-  const changeSummary = () => {
-    setTitle("Haunted Parlor");
-    setSummary(
-      `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis beatae dolorem et illum asperiores fugit inventore facilis, aut excepturi tenetur officia nihil necessitatibus deleniti eligendi minus ipsam quibusdam cum! Dignissimos!`
-    );
+  const changeSummary = async() => {
+    setLoading(true);
+    try {
+      // Assuming your localhost server is running on http://localhost:5000
+      const response = await fetch('https://video-summary-cs2k.onrender.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({link: link})
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      setLoading(false);
+      if (data['error'])
+      {
+        setError(data['error'][0]['message'])
+        setInterval(()=>{
+          setError("")
+        }, 3000)
+      }
+      else 
+      {
+        setSummary(data['summarized_text']);
+        setTitle(data['title']);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Handle errors as needed
+    }
   };
   return (
     <>
@@ -140,6 +197,8 @@ const WorkState = (props) => {
           saveWork,
           clearPage,
           getWork,
+          error,
+          loading
         }}
       >
         {props.children}

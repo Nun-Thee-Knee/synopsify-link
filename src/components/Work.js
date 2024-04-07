@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
 import SideNavbar from "./SideNavbar";
 import WorkContext from "../context/WorkContext";
+import Spinner from "./Spinner";
 
 const Work = () => {
   const context = useContext(WorkContext);
   const [ytLink, setytLink] = useState("");
   const {
+    loading,
     saveAsPDF,
     title,
     link,
@@ -15,6 +17,7 @@ const Work = () => {
     clearPage,
     saveWork,
     getWork,
+    error
   } = context;
   const [display, setDisplay] = useState("hidden");
   const toggleSideBar = () => {
@@ -144,6 +147,9 @@ const Work = () => {
               <i className="bi bi-card-checklist mr-2"></i>
               Summarize
             </button>
+            <div className="mt-3">
+              <p className="text-red-500">{error}</p>
+            </div>
             <div
               className={`${
                 summary !== "" ? "border-red-950 border-[1px] rounded-xl" : ""
@@ -152,6 +158,7 @@ const Work = () => {
               <center>
                 <h1 className="text-2xl font-extrabold">{title}</h1>
                 <br />
+                {loading && <Spinner/>}
                 {summary}
               </center>
             </div>
