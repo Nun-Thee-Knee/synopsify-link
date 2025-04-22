@@ -50,7 +50,7 @@ class Data:
         if transcript_text:
             prompt = "Can you provide detailed notes for the purpose of learning based on the transcripts?"
             self.summary = self.generate_gemini_content(transcript_text, prompt)
-            prompt = "Can you give a title for the summary "
+            prompt = "Give a single sentence as title of this notes"
             self.title = self.generate_gemini_content(self.summary, prompt)
 
     def summarization(self):
