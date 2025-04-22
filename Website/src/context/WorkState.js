@@ -34,71 +34,55 @@ const WorkState = (props) => {
   };
 
   const saveAsPDF = () => {
-     // Create a new jsPDF instance
      const doc = new jsPDF();
+     doc.setFontSize(18);
+     doc.setFont('helvetica', 'bold');
 
-     // Set font styles for title
-     doc.setFontSize(18); // Adjust font size as needed
-     doc.setFont('helvetica', 'bold'); // Making title bold
- 
-     // Calculate the starting position for the title
      let titleX = 10;
      let titleY = 20;
- 
-     // Split the title into words
+
      const titleWords = title.split(' ');
- 
-     // Add title to the PDF, handling multiple lines and pages
+
      titleWords.forEach(word => {
          const wordWidth = doc.getStringUnitWidth(word) * doc.internal.getFontSize() / doc.internal.scaleFactor;
  
-         // Check if the word fits on the current line
          if (titleX + wordWidth > doc.internal.pageSize.width - 20) {
-             // Move to the next line
+
              titleX = 10;
-             titleY += 18; // Adjust line height as needed
+             titleY += 18;
  
-             // Check if there's enough space on the current page
              if (titleY > doc.internal.pageSize.height - 10) {
-                 // Move to a new page
+
                  doc.addPage();
-                 // Reset font styles for title on the new page
                  doc.setFont('helvetica', 'bold');
                  doc.setFontSize(18);
                  titleY = 20;
              }
          }
  
-         // Add the word to the PDF
          doc.text(word, titleX, titleY);
-         titleX += wordWidth + 5; // Add a space between words
+         titleX += wordWidth + 5;
      });
  
-     // Reset font styles for summary
      doc.setFont('helvetica', 'normal');
      doc.setFontSize(12);
  
-     // Calculate the starting position for the summary
      let summaryX = 10;
-     let summaryY = titleY + 18; // Adjust Y position based on title height
+     let summaryY = titleY + 18; 
  
-     // Wrap and add the summary text, handling multiple pages
-     const lines = doc.splitTextToSize(summary, doc.internal.pageSize.width - 20); // Adjust as needed
+     const lines = doc.splitTextToSize(summary, doc.internal.pageSize.width - 20);
      for (let i = 0; i < lines.length; i++) {
          doc.text(lines[i], summaryX, summaryY);
-         summaryY += 12; // Adjust line height as needed
+         summaryY += 12; 
  
          if (summaryY > doc.internal.pageSize.height - 10) {
-             // Move to a new page if not enough space for the summary
              doc.addPage();
-             // Reset font styles for summary on the new page
              doc.setFont('helvetica', 'normal');
              doc.setFontSize(12);
              summaryY = 10;
          }
      }
  
-     // Save the PDF
      doc.save(`${title}.pdf`);
   };
 
@@ -149,7 +133,6 @@ const WorkState = (props) => {
   const changeSummary = async() => {
     setLoading(true);
     try {
-      // Assuming your localhost server is running on http://localhost:5000
       const response = await fetch('https://video-summary-cs2k.onrender.com', {
         method: 'POST',
         headers: {
@@ -178,7 +161,6 @@ const WorkState = (props) => {
       }
     } catch (error) {
       console.error('Error fetching data:', error);
-      // Handle errors as needed
     }
   };
   return (
