@@ -18,7 +18,7 @@ def data_fetcher(link):
 def main():
     if request.method == "POST":
         if "link" not in request.json:
-            return jsonify({"message": "You have not provided correct arguments"})
+            return jsonify({"message": "You have not provided correct arguments"}, 400)
         else:
             link = request.json['link']
             result = data_fetcher(link)
